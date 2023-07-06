@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+#pragma warning disable
 
 namespace PopulationTask
 {
@@ -24,7 +25,41 @@ namespace PopulationTask
         /// <exception cref="ArgumentOutOfRangeException">Throw if the value of percents is less then 0% or more then 100%.</exception>
         public static int GetYears(int initialPopulation, double percent, int visitors, int currentPopulation)
         {
-            throw new NotImplementedException("You need to implement this method.");
+            if (currentPopulation <= 0)
+            {
+                throw new ArgumentException("Wrong value of current population");
+            }
+
+            if (initialPopulation <= 0)
+            {
+                throw new ArgumentException("Wrong value of initial populataion");
+            }
+
+            if (currentPopulation < initialPopulation)
+            {
+                throw new ArgumentException("Wrong value of current population (less than initial populataion)");
+            }
+
+            if (percent < 0 || percent > 100)
+            {
+                throw new ArgumentOutOfRangeException("Value of percent cannot be less then 0% or more then 100%");
+            }
+
+            if (visitors < 0)
+            {
+                throw new ArgumentException("Wrong value of visitors");
+            }
+
+            int years = 0;
+            int population = initialPopulation;
+
+            while (population < currentPopulation)
+            {
+                population += (int)(population * (percent / 100)) + visitors;
+                years++;
+            }
+
+            return years;
         }
     }
 }
